@@ -1,0 +1,14 @@
+//
+// Created by admin on 03.04.2022.
+//
+
+#ifndef TRANSFORMATIONS_ROTATIONMATRIX_H
+#define TRANSFORMATIONS_ROTATIONMATRIX_H
+
+
+class RotationMatrix {
+
+};
+
+
+#endif //TRANSFORMATIONS_ROTATIONMATRIX_H
