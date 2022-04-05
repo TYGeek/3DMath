@@ -3,7 +3,7 @@
 //
 
 #include "RotationMatrix.h"
-#include "vector3.h"
+#include "Vector3.h"
 #include "mathUtils.h"
 #include "Quaternion.h"
 #include "EulerAngles.h"
@@ -77,15 +77,15 @@ void RotationMatrix::fromObjectToInertialQuaternion(const Quaternion &q) {
 // Rotate a vector from inertial to object space
 Vector3 RotationMatrix::inertialToObject(const Vector3 &v)const {
     // Perform the matrix multiplication in the "standart" way
-    return Vector3(m11*v.x + m21*v.y + m31*v.z,
-                   m12*v.x + m22*v.y + m32*v.z,
-                   m13*v.x + m23*v.y + m33*v.z);
+    return {m11*v.x + m21*v.y + m31*v.z,
+            m12*v.x + m22*v.y + m32*v.z,
+            m13*v.x + m23*v.y + m33*v.z};
 }
 
 // Rotate a vector from object to inertial space
 Vector3 RotationMatrix::objectToInertial(const Vector3 &v) const {
     // Multiply by transpose
-    return Vector3(m11*v.x + m12*v.y + m13*v.z,
-                   m21*v.x + m22*v.y + m23*v.z,
-                   m31*v.x + m32*v.y + m33*v.z);
+    return {m11*v.x + m12*v.y + m13*v.z,
+            m21*v.x + m22*v.y + m23*v.z,
+            m31*v.x + m32*v.y + m33*v.z};
 }

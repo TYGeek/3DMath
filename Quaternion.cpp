@@ -8,7 +8,7 @@
 
 #include "Quaternion.h"
 #include "mathUtils.h"
-#include "vector3.h"
+#include "Vector3.h"
 #include "EulerAngles.h"
 
 // global identity quaternion

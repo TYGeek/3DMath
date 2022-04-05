@@ -20,6 +20,9 @@ public:
     float m21, m22, m23;
     float m31, m32, m33;
 
+    RotationMatrix():   m11{1.0f},m12{0.0f},m13{0.0f},
+                        m21{0.0f},m22{1.0f},m23{0.0f},
+                        m31{0.0f},m32{0.0f},m33{1.0f}{}
     // Set to identity
     void identity();
 

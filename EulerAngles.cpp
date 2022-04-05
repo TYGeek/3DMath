@@ -5,6 +5,8 @@
 
 #include "EulerAngles.h"
 #include "Quaternion.h"
+#include "Matrix4x3.h"
+#include "RotationMatrix.h"
 #include "mathUtils.h"
 
 // global Euler angles identity
@@ -120,12 +122,12 @@ void EulerAngles::fromInertialToObjectQuaternion(const Quaternion &q) {
 }
 
 // setup Euler angle, given an object->world transformation matrix
-void EulerAngles::fromObjectToWorldMatrix(const Matrix4X3 &m) {
+void EulerAngles::fromObjectToWorldMatrix(const Matrix4x3 &m) {
     // extract sin(pitch) from m32
     float sp = -m.m32;
 
     // check for Gimbel lock
-    if(fabs(sp) > 9.99999f)
+    if(fabs(sp) > 0.99999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;
@@ -143,12 +145,12 @@ void EulerAngles::fromObjectToWorldMatrix(const Matrix4X3 &m) {
 }
 
 // setup Euler angle, given an world->object transformation matrix
-void EulerAngles::fromWorldToObjectMatrix(const Matrix4X3 &m) {
+void EulerAngles::fromWorldToObjectMatrix(const Matrix4x3 &m) {
     // extract sin(pitch) from m23
     float sp = -m.m23;
 
     // check for Gimbel lock
-    if(fabs(sp) > 9.99999f)
+    if(fabs(sp) > 0.99999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;
@@ -171,7 +173,7 @@ void EulerAngles::fromRotationMatrix(const RotationMatrix &m) {
     float sp = -m.m23;
 
     // check for Gimbel lock
-    if(fabs(sp) > 9.99999f)
+    if(fabs(sp) > 0.99999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;

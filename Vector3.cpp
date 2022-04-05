@@ -1,4 +1,4 @@
-#include "vector3.h"
+#include "Vector3.h"
 #include <cmath>
 
 Vector3::Vector3() {}
@@ -35,13 +35,13 @@ void Vector3::zero()
 // Unary -
 Vector3 Vector3::operator-() const
 {
-    return Vector3(-x, -y, -z);
+    return {-x, -y, -z};
 }
 
 // Binary +
 Vector3 Vector3::operator+(const Vector3 &vec) const
 {
-    return Vector3(x+vec.x, y+vec.y, z+vec.z);
+    return {x+vec.x, y+vec.y, z+vec.z};
 }
 
 Vector3& Vector3::operator+=(const Vector3 &vec)
@@ -55,7 +55,7 @@ Vector3& Vector3::operator+=(const Vector3 &vec)
 // Binary -
 Vector3 Vector3::operator-(const Vector3 &vec) const
 {
-    return Vector3(x-vec.x, y-vec.y, z-vec.z);
+    return {x-vec.x, y-vec.y, z-vec.z};
 }
 
 Vector3& Vector3::operator-=(const Vector3 &vec)

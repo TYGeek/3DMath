@@ -7,7 +7,7 @@
 
 // Forward declaration
 class Quaternion;
-class Matrix4X3;
+class Matrix4x3;
 class RotationMatrix;
 
 // This class represent heading->pitch->bank Euler angle triple
@@ -33,8 +33,8 @@ public:
 
     // convert the transform matrix to Euler angle format
     // the translation portion of the matrix is ignored - matrix orthogonal
-    void fromObjectToWorldMatrix(Matrix4X3 const& m);
-    void fromWorldToObjectMatrix(Matrix4X3 const& m);
+    void fromObjectToWorldMatrix(Matrix4x3 const& m);
+    void fromWorldToObjectMatrix(Matrix4x3 const& m);
 
     // convert a rotation matrix to Euler angle format
     void fromRotationMatrix(RotationMatrix const& m);

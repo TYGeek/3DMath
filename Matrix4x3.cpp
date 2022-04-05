@@ -6,7 +6,7 @@
 #include <cmath>
 
 #include "Matrix4x3.h"
-#include "vector3.h"
+#include "Vector3.h"
 #include "EulerAngles.h"
 #include "Quaternion.h"
 #include "RotationMatrix.h"
@@ -389,9 +389,9 @@ void Matrix4x3::setupReflect(const Vector3 &n) {
 Vector3 operator*(Vector3 const& p, Matrix4x3 const& m)
 {
     // Grind through the linear algebra
-    return  Vector3(p.x*m.m11 + p.y*m.m21 + p.z*m.m31 + m.tx,
-                    p.x*m.m12 + p.y*m.m22 + p.z*m.m32 + m.ty,
-                    p.x*m.m13 + p.y*m.m23 + p.z*m.m33 + m.tz);
+    return  {p.x*m.m11 + p.y*m.m21 + p.z*m.m31 + m.tx,
+             p.x*m.m12 + p.y*m.m22 + p.z*m.m32 + m.ty,
+             p.x*m.m13 + p.y*m.m23 + p.z*m.m33 + m.tz};
 }
 Vector3& operator*=(Vector3& p, Matrix4x3 const& m)
 {
@@ -484,7 +484,7 @@ Matrix4x3 inverse(Matrix4x3 const& m)
 // Return the translation portion of the matrix
 Vector3 getTranslation(Matrix4x3 const& m)
 {
-    return Vector3(m.tx, m.ty, m.tz);
+    return {m.tx, m.ty, m.tz};
 }
 
 // Extract the position of an object given a parent->local
@@ -497,9 +497,9 @@ Vector3 getPositionFromParentToLocalMatrix(Matrix4x3 const& m)
     // transpose of the 3x3 portion. By using transpose,
     // we assume that the matrix is orthogonal.
     // This function not make sense of non-rigid transformation.
-    return Vector3( -(m.tx*m.m11 + m.ty*m.m12 + m.tz*m.m13),
-                    -(m.tx*m.m21 + m.ty*m.m22 + m.tz*m.m23),
-                    -(m.tx*m.m31 + m.ty*m.m32 + m.tz*m.m33));
+    return { -(m.tx*m.m11 + m.ty*m.m12 + m.tz*m.m13),
+             -(m.tx*m.m21 + m.ty*m.m22 + m.tz*m.m23),
+             -(m.tx*m.m31 + m.ty*m.m32 + m.tz*m.m33)};
 }
 
 // Extract the position of an object given a local->parent
@@ -507,5 +507,5 @@ Vector3 getPositionFromParentToLocalMatrix(Matrix4x3 const& m)
 Vector3 getPositionFromLocalToParentMatrix(Matrix4x3 const& m)
 {
     // Position is simply the translation portion
-    return Vector3(m.tx, m.ty, m.tz);
+    return {m.tx, m.ty, m.tz};
 }

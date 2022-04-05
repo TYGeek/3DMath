@@ -7,4 +7,4 @@ add_executable(transformations main.cpp
         mathUtils.cpp mathUtils.h
         EulerAngles.cpp EulerAngles.h
         Quaternion.cpp Quaternion.h
-        vector3.cpp vector3.h RotationMatrix.cpp RotationMatrix.h Matrix4x3.cpp Matrix4x3.h)
+        Vector3.cpp Vector3.h RotationMatrix.cpp RotationMatrix.h Matrix4x3.cpp Matrix4x3.h)
