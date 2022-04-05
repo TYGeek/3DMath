@@ -10,33 +10,37 @@ class Quaternion;
 class Matrix4x3;
 class RotationMatrix;
 
-// This class represent heading->pitch->bank Euler angle triple
+// This class is used to store an orientation that
+// represent heading->pitch->bank Euler angle triple
+// TODO: implement operation addition and subtraction, multiplication by scalar etc.
+//       implement move constructor
 class EulerAngles {
 public:
     float heading;
     float pitch;
     float bank;
 
-    EulerAngles() = default;
+    EulerAngles():heading{0.0f}, pitch{0.0f}, bank{0.0f}{};
     EulerAngles(float h, float p, float b): heading{h}, pitch{p}, bank{b}{};
     ~EulerAngles() = default;
 
-    // set identity triple (all zeros)
+    // Set identity triple (all zeros)
     void identity();
 
-    // determine canonical Euler angle triple
+    // Determine canonical Euler angle triple
     void canonize();
 
-    // convert Quaternion to Euler angle format
+    // Convert Quaternion to Euler angle format
     void fromObjectToInertialQuaternion(Quaternion const& q);
     void fromInertialToObjectQuaternion(Quaternion const& q);
 
-    // convert the transform matrix to Euler angle format
-    // the translation portion of the matrix is ignored - matrix orthogonal
+    // Convert the transform matrix to Euler angle format.
+    // The translation portion of the matrix is ignored.
+    // The matrix is assumed to be orthogonal
     void fromObjectToWorldMatrix(Matrix4x3 const& m);
     void fromWorldToObjectMatrix(Matrix4x3 const& m);
 
-    // convert a rotation matrix to Euler angle format
+    // Convert a rotation matrix to Euler angle form.
     void fromRotationMatrix(RotationMatrix const& m);
 
 private:

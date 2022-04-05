@@ -10,7 +10,7 @@
 #include "EulerAngles.h"
 #include "Quaternion.h"
 #include "RotationMatrix.h"
-#include "mathUtils.h"
+#include "MathUtils.h"
 
 // Set the matrix identity
 void Matrix4x3::identity() {

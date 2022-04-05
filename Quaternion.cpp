@@ -7,7 +7,7 @@
 #include "tuple"
 
 #include "Quaternion.h"
-#include "mathUtils.h"
+#include "MathUtils.h"
 #include "Vector3.h"
 #include "EulerAngles.h"
 

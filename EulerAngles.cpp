@@ -7,10 +7,10 @@
 #include "Quaternion.h"
 #include "Matrix4x3.h"
 #include "RotationMatrix.h"
-#include "mathUtils.h"
+#include "MathUtils.h"
 
-// global Euler angles identity
-// we do not know exactly when this object can be constructed in relation to other object,
+// The global Euler angles identity constant.
+// We do not know exactly when this object can be constructed in relation to other object,
 // so it is possible for the object to be referenced before it is initialized.
 // It will be zero-initialized at program startup.
 const EulerAngles kEulerAnglesIdentity{0.0f, 0.0f, 0.0f};
@@ -21,6 +21,11 @@ void EulerAngles::identity() {
     bank = 0.0f;
 }
 
+// Set the Euler angle triple to its canonical value.
+// This does not change the meaning of the Euler angles as representation of
+// orientation in 3D, but if the angles are for other purposes
+// as angular velocities, etc., then the operation might not be valid.
+// See 10.3.4
 void EulerAngles::canonize() {
     // wrap pitch in range -pi...pi
     pitch = wrapPi(pitch);
@@ -38,7 +43,7 @@ void EulerAngles::canonize() {
         bank += kPi;
     }
 
-    // check for the Gimbal lock
+    // check for the Gimbal lock, value near -Pi/2 or +Pi/2
     if(std::fabs(pitch) > kPiOver2 - 1e-4)
     {
         // we are in Gimbal lock all rotation about vertical axis to heading
@@ -56,12 +61,13 @@ void EulerAngles::canonize() {
 }
 
 // Setup Euler angle, given an object->inertial rotation quaternion
+// See 10.6.6
 void EulerAngles::fromObjectToInertialQuaternion(const Quaternion &q) {
-    // extract sin pitch
+    // extract sin(pitch)
     float sp = -2.0f * (q.y * q.z - q.w * q.x);
 
     // check for Gimbal lock
-    if(std::fabs(sp) > 0.9999f)
+    if(std::fabs(sp) > 0.999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;
@@ -89,12 +95,13 @@ void EulerAngles::fromObjectToInertialQuaternion(const Quaternion &q) {
 }
 
 // Setup Euler angle, given an inertial->object rotation quaternion
+// See 10.6.6
 void EulerAngles::fromInertialToObjectQuaternion(const Quaternion &q) {
     // extract sin pitch
     float sp = -2.0f * (q.y * q.z + q.w * q.x);
 
     // check for Gimbal lock
-    if(std::fabs(sp) > 0.9999f)
+    if(std::fabs(sp) > 0.999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;
@@ -121,13 +128,16 @@ void EulerAngles::fromInertialToObjectQuaternion(const Quaternion &q) {
     }
 }
 
-// setup Euler angle, given an object->world transformation matrix
+// Setup Euler angle, given an object->world transformation matrix
+// The matrix assumed to be orthogonal.
+// The translation portion is ignored.
+// See 10.6.2
 void EulerAngles::fromObjectToWorldMatrix(const Matrix4x3 &m) {
     // extract sin(pitch) from m32
     float sp = -m.m32;
 
     // check for Gimbel lock
-    if(fabs(sp) > 0.99999f)
+    if(fabs(sp) > 0.999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;
@@ -144,13 +154,16 @@ void EulerAngles::fromObjectToWorldMatrix(const Matrix4x3 &m) {
     }
 }
 
-// setup Euler angle, given an world->object transformation matrix
+// Setup Euler angle, given a world->object transformation matrix
+// The matrix assumed to be orthogonal.
+// The translation portion is ignored.
+// See 10.6.2
 void EulerAngles::fromWorldToObjectMatrix(const Matrix4x3 &m) {
     // extract sin(pitch) from m23
     float sp = -m.m23;
 
     // check for Gimbel lock
-    if(fabs(sp) > 0.99999f)
+    if(fabs(sp) > 0.999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;
@@ -167,13 +180,14 @@ void EulerAngles::fromWorldToObjectMatrix(const Matrix4x3 &m) {
     }
 }
 
-// setup an Euler angle, given an rotation matrix
+// Setup an Euler angle, given a rotation matrix
+// See 10.6.2
 void EulerAngles::fromRotationMatrix(const RotationMatrix &m) {
     // extract sin(pitch) from m23
     float sp = -m.m23;
 
     // check for Gimbel lock
-    if(fabs(sp) > 0.99999f)
+    if(fabs(sp) > 0.999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;

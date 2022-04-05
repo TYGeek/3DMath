@@ -4,7 +4,7 @@ project(transformations)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(transformations main.cpp
-        mathUtils.cpp mathUtils.h
+        MathUtils.cpp MathUtils.h
         EulerAngles.cpp EulerAngles.h
         Quaternion.cpp Quaternion.h
         Vector3.cpp Vector3.h RotationMatrix.cpp RotationMatrix.h Matrix4x3.cpp Matrix4x3.h)

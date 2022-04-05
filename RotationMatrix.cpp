@@ -4,7 +4,7 @@
 
 #include "RotationMatrix.h"
 #include "Vector3.h"
-#include "mathUtils.h"
+#include "MathUtils.h"
 #include "Quaternion.h"
 #include "EulerAngles.h"
 
@@ -57,7 +57,7 @@ void RotationMatrix::fromInertialToObjectQuaternion(const Quaternion &q) {
     m33 = 1.0f - 2.0f*(q.x*q.x + q.y*q.y);
 }
 
-// Setuo the matrix,
+// Setup the matrix,
 // given a quaternion that performs an object->inertial rotation
 void RotationMatrix::fromObjectToInertialQuaternion(const Quaternion &q) {
     // Fill in matrix element

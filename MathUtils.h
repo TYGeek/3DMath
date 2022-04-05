@@ -15,7 +15,7 @@ const float k1OverPi = 1 / kPi;
 const float k1Over2Pi = 1 / k2Pi;
 
 // wrap an angle in range -pi...pi
-extern float wrapPi(float angle);
+extern float wrapPi(float theta);
 
 // "safe" inverse trig functions
 extern float safeAcos(float x);
