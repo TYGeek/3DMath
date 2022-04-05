@@ -23,6 +23,11 @@ public:
     float m31, m32, m33;
     float tx, ty, tz;
 
+    Matrix4x3():m11{1.0f},m12{0.0f},m13{0.0f},
+                m21{0.0f},m22{1.0f},m23{0.0f},
+                m31{0.0f},m32{0.0f},m33{1.0f},
+                tx{0.0f},ty{0.0f},tz{0.0f}{};
+
     // Set to identity
     void identity();
 
@@ -44,7 +49,7 @@ public:
     void setupRotate(int axis, float theta);
 
     // Setup the matrix to perform a rotation about an arbitrary axis
-    void setupRotate(Vector3 const& axsi, float theta);
+    void setupRotate(Vector3 const& axis, float theta);
 
     // Setup the matrix to perform a rotation,
     // given the angular displacement in quaternion form
@@ -77,9 +82,10 @@ private:
 
 // Operator* is used to transform a point and for concatenates matrices
 Vector3 operator*(Vector3 const& p, Matrix4x3 const& m);
+Vector3& operator*=(Vector3& p, Matrix4x3 const& m);
+
 Matrix4x3 operator*(Matrix4x3 const& a, Matrix4x3 const& b);
-Vector3& operator*=(Vector3 const& p, Matrix4x3 const& m);
-Matrix4x3& operator*=(Matrix4x3 const& a, Matrix4x3 const& b);
+Matrix4x3& operator*=(Matrix4x3& a, Matrix4x3 const& b);
 
 // Compute the determinant of the 3x3 portion
 float determinant(Matrix4x3 const& m);
