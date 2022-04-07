@@ -36,7 +36,8 @@ void EulerAngles::canonize() {
         pitch = -kPi - pitch;
         heading += kPi;
         bank += kPi;
-    } else if(pitch > kPiOver2)
+    }
+    else if(pitch > kPiOver2)
     {
         pitch = kPi - pitch;
         heading += kPi;
@@ -131,6 +132,10 @@ void EulerAngles::fromInertialToObjectQuaternion(const Quaternion &q) {
 // Setup Euler angle, given an object->world transformation matrix
 // The matrix assumed to be orthogonal.
 // The translation portion is ignored.
+// M_object->inertial = (M_inertial->object)^-1 = B^-1*P^-1*H^-1
+//                    = Rz(−b) Rx(−p) Ry(−h) = { ch*cb+sh*sp*sb    sb*cp    −sh*cb+ch*sp*sb
+//                                              −ch*sb+sh*sp*cb    cb*cp     sb*sh+ch*sp*cb
+//                                                    sh*cp         -sp           ch*cp    }
 // See 10.6.2
 void EulerAngles::fromObjectToWorldMatrix(const Matrix4x3 &m) {
     // extract sin(pitch) from m32
@@ -142,13 +147,14 @@ void EulerAngles::fromObjectToWorldMatrix(const Matrix4x3 &m) {
         // looking straight up or down
         pitch = kPiOver2 * sp;
         // compute heading, pitch bank to zero
-        heading = atan2(-m.m23, m.m11);
         bank = 0.0f;
+        heading = atan2(-m.m23, m.m11);
     }
     else
     {
         // compute angles
         heading = atan2(m.m31, m.m33);
+        // asic() return value in the range -Pi/2...+Pi/2
         pitch = asin(sp);
         bank = atan2(m.m12, m.m22);
     }
@@ -157,25 +163,30 @@ void EulerAngles::fromObjectToWorldMatrix(const Matrix4x3 &m) {
 // Setup Euler angle, given a world->object transformation matrix
 // The matrix assumed to be orthogonal.
 // The translation portion is ignored.
+// M_inertial->object = HPB = Ry(−h) Rx(−p) Rz(−b) = { ch*cb+sh*sp*sb   −ch*sb+sh*sp*cb    sh*cp
+//                                                          sb*cp           cb*cp           −sp
+//                                                     −sh*cb+ch*sp*sb   sb*sh+ch*sp*cb    ch*cp }
 // See 10.6.2
 void EulerAngles::fromWorldToObjectMatrix(const Matrix4x3 &m) {
     // extract sin(pitch) from m23
     float sp = -m.m23;
 
-    // check for Gimbel lock
+    // check for Gimbal lock
     if(fabs(sp) > 0.999f)
     {
         // looking straight up or down
         pitch = kPiOver2 * sp;
         // compute heading, pitch bank to zero
-        heading = atan2(-m.m31, m.m11);
         bank = 0.0f;
+        heading = atan2(-m.m31, m.m11);
     }
     else
     {
         // compute angles
-        heading = atan2(m.m13, m.m33);
+        // asic() return value in the range -Pi/2...+Pi/2
         pitch = asin(sp);
+        // atan2() return value in the range -Pi...+Pi
+        heading = atan2(m.m13, m.m33);
         bank = atan2(m.m21, m.m22);
     }
 }
@@ -186,7 +197,7 @@ void EulerAngles::fromRotationMatrix(const RotationMatrix &m) {
     // extract sin(pitch) from m23
     float sp = -m.m23;
 
-    // check for Gimbel lock
+    // check for Gimbal lock
     if(fabs(sp) > 0.999f)
     {
         // looking straight up or down
@@ -198,8 +209,8 @@ void EulerAngles::fromRotationMatrix(const RotationMatrix &m) {
     else
     {
         // compute angles
-        heading = atan2(m.m13, m.m33);
         pitch = asin(sp);
+        heading = atan2(m.m13, m.m33);
         bank = atan2(m.m21, m.m22);
     }
 }

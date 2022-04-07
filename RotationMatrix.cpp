@@ -16,6 +16,8 @@ void RotationMatrix::identity() {
 }
 
 // Setup the matrix with the specific orientation
+// Converting Euler Angles to a Matrix (inertial->object matrix)
+// See 10.6.1
 void RotationMatrix::setup(const EulerAngles &orientation) {
     // Fetch sine and cosine of angles
     float sh, ch;
@@ -42,6 +44,7 @@ void RotationMatrix::setup(const EulerAngles &orientation) {
 
 // Setup the matrix,
 // given a quaternion that performs an inertial->object rotation
+// See 10.6.3
 void RotationMatrix::fromInertialToObjectQuaternion(const Quaternion &q) {
     // Fill in the matrix elements
     m11 = 1.0f - 2.0f*(q.y*q.y + q.z*q.z);
@@ -59,6 +62,7 @@ void RotationMatrix::fromInertialToObjectQuaternion(const Quaternion &q) {
 
 // Setup the matrix,
 // given a quaternion that performs an object->inertial rotation
+// See 10.6.3
 void RotationMatrix::fromObjectToInertialQuaternion(const Quaternion &q) {
     // Fill in matrix element
     m11 = 1.0f - 2.0f*(q.y*q.y + q.z*q.z);

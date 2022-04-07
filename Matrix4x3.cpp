@@ -55,6 +55,7 @@ void Matrix4x3::setupTranslation(const Vector3 &v) {
 void Matrix4x3::setupLocalToParent(const Vector3 &pos, const EulerAngles &orient) {
     // Create a rotation matrix
     RotationMatrix orientMatrix;
+    // Convert EulerAngles to RotationMatrix
     orientMatrix.setup(orient);
 
     // Setup the 4x3 matrix.

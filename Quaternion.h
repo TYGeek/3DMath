@@ -8,6 +8,7 @@
 // forward declaration
 class Vector3;
 class EulerAngles;
+class RotationMatrix;
 
 // implement a quaternion for the purpose of
 // representing an angular displacement (orientation) in 3D
@@ -28,6 +29,9 @@ public:
     void setToRotateAboutY(float angle);
     void setToRotateAboutZ(float angle);
     void setToRotateAboutAxis(const Vector3& axis, float angle);
+
+    // Setup the quaternion from the rotation matrix
+    void fromInertialToObjectMatrix(RotationMatrix const& q);
 
     // setup to perform object<->inertial rotation,
     // given orientation in Euler angle format

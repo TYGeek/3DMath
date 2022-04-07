@@ -10,12 +10,22 @@
 #include "MathUtils.h"
 #include "Vector3.h"
 #include "EulerAngles.h"
+#include "RotationMatrix.h"
+
 
 // global identity quaternion
 // we do not know exactly when this object can be constructed in relation to other object,
 // so it is possible for the object to be referenced before it is initialized.
 // It will be zero-initialized at program startup.
 const Quaternion kQuaternionIdentity {1.0f, 0.0f, 0.0f, 0.0f};
+
+// Represent a quaternion with no angular displacement
+void Quaternion::identity() {
+    w = 1.0f;
+    x = 0.0f;
+    y = 0.0f;
+    z = 0.0f;
+}
 
 // Set quaternion to rotate about the specific axis
 void Quaternion::setToRotateAboutX(float angle) {
@@ -68,6 +78,7 @@ void Quaternion::setToRotateAboutAxis(const Vector3 &axis, float angle) {
 
 // Setup quaternion to perform object->inertial rotation,
 // given orientation in Euler angles format
+// See 10.6.5
 void Quaternion::setRotateObjectToInertial(const EulerAngles &orientation) {
     // compute sine and cosine of the half angles
     float sp, sb, sh;
@@ -85,6 +96,7 @@ void Quaternion::setRotateObjectToInertial(const EulerAngles &orientation) {
 
 // Setup quaternion to perform inertial->object rotation,
 // given orientation in Euler angles format
+// See 10.6.5
 void Quaternion::setRotateInertialToObject(const EulerAngles &orientation) {
     // compute sine and cosine of the half angles
     float sp, sb, sh;
@@ -184,11 +196,67 @@ Vector3 Quaternion::getRotationAxis() const {
     return result;
 }
 
-void Quaternion::identity() {
-    w = 1.0f;
-    x = 0.0f;
-    y = 0.0f;
-    z = 0.0f;
+// Setup the quaternion from the rotation matrix
+// See 10.6.4
+void Quaternion::fromInertialToObjectMatrix(const RotationMatrix &m)
+{
+    // Determine which of w, x, y, or z has the largest absolute value
+    float fourWSquaredMinus1 = m.m11 + m.m22 + m.m33;
+    float fourXSquaredMinus1 = m.m11 - m.m22 - m.m33;
+    float fourYSquaredMinus1 = m.m22 - m.m11 - m.m33;
+    float fourZSquaredMinus1 = m.m33 - m.m11 - m.m22;
+
+    int biggestIndex = 0;
+    float fourBiggestSquaredMinus1 = fourWSquaredMinus1;
+
+    if ( fourXSquaredMinus1 > fourBiggestSquaredMinus1 )
+    {
+        fourBiggestSquaredMinus1 = fourXSquaredMinus1 ;
+        biggestIndex = 1;
+    }
+    if ( fourYSquaredMinus1 > fourBiggestSquaredMinus1 ){
+        fourBiggestSquaredMinus1 = fourYSquaredMinus1 ;
+        biggestIndex = 2;
+    }
+    if ( fourZSquaredMinus1 > fourBiggestSquaredMinus1 ){
+        fourBiggestSquaredMinus1 = fourZSquaredMinus1 ;
+        biggestIndex = 3;
+    }
+
+    // Perform square root and division
+    float biggestVal = sqrt ( fourBiggestSquaredMinus1 + 1.0f ) * 0.5f;
+    float mult = 0.25f / biggestVal;
+
+    // Apply table to compute quaternion values
+    switch (biggestIndex) {
+        case 0:
+            w = biggestVal;
+            x = (m.m23 - m.m32) * mult;
+            y = (m.m31 - m.m13) * mult;
+            z = (m.m12 - m.m21) * mult;
+            break;
+        case 1:
+            x = biggestVal;
+            w = (m.m23 - m.m32) * mult;
+            y = (m.m12 + m.m21) * mult;
+            z = (m.m31 + m.m13) * mult;
+            break;
+        case 2:
+            y = biggestVal;
+            w = (m.m31 - m.m13) * mult;
+            x = (m.m12 + m.m21) * mult;
+            z = (m.m23 + m.m32) * mult;
+            break;
+        case 3:
+            z = biggestVal;
+            w = (m.m12 - m.m21) * mult;
+            x = (m.m31 + m.m13) * mult;
+            y = (m.m23 + m.m32) * mult;
+            break;
+        default:
+            assert(false);
+    }
+
 }
 
 // Quaternion dot product. We use nonmember function
@@ -280,7 +348,7 @@ Quaternion conjugate(Quaternion const& q)
 }
 
 // quaternion exponentiation
-extern Quaternion pow(Quaternion const& q, float exponent)
+Quaternion pow(Quaternion const& q, float exponent)
 {
     // check for the case of an identity quaternion.
     // This will protect against divide by zero
