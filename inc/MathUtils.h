@@ -13,6 +13,7 @@ const float k2Pi = 2.0f * kPi;
 const float kPiOver2 = kPi / 2.0f;
 const float k1OverPi = 1 / kPi;
 const float k1Over2Pi = 1 / k2Pi;
+const float RAD = kPi/180.0f;
 
 // wrap an angle in range -pi...pi
 extern float wrapPi(float theta);

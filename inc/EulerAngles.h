@@ -5,6 +5,8 @@
 #ifndef TRANSFORMATIONS_EULERANGLES_H
 #define TRANSFORMATIONS_EULERANGLES_H
 
+#include <ostream>
+
 // Forward declaration
 class Quaternion;
 class Matrix4x3;
@@ -46,6 +48,8 @@ public:
 private:
 
 };
+
+std::ostream& operator<<(std::ostream& os, EulerAngles const& vec);
 
 // a global identity Euler angle constant
 extern const EulerAngles kEulerAnglesIdentity;

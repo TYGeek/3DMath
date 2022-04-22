@@ -83,9 +83,9 @@ void Quaternion::setRotateObjectToInertial(const EulerAngles &orientation) {
     // compute sine and cosine of the half angles
     float sp, sb, sh;
     float cp, cb, ch;
-    std::tie(sp, cp) = sinCos(orientation.pitch);
-    std::tie(sb, cb) = sinCos(orientation.bank);
-    std::tie(sh, ch) = sinCos(orientation.heading);
+    std::tie(sp, cp) = sinCos(orientation.pitch * 0.5f);
+    std::tie(sb, cb) = sinCos(orientation.bank * 0.5f);
+    std::tie(sh, ch) = sinCos(orientation.heading * 0.5f);
 
     // compute values
     w = ch*cp*cb + sh*sp*sb;
@@ -101,9 +101,9 @@ void Quaternion::setRotateInertialToObject(const EulerAngles &orientation) {
     // compute sine and cosine of the half angles
     float sp, sb, sh;
     float cp, cb, ch;
-    std::tie(sp, cp) = sinCos(orientation.pitch);
-    std::tie(sb, cb) = sinCos(orientation.bank);
-    std::tie(sh, ch) = sinCos(orientation.heading);
+    std::tie(sp, cp) = sinCos(orientation.pitch * 0.5f);
+    std::tie(sb, cb) = sinCos(orientation.bank * 0.5f);
+    std::tie(sh, ch) = sinCos(orientation.heading * 0.5f);
 
     // compute values
     w = ch*cp*cb + sh*sp*sb;
@@ -267,6 +267,7 @@ float dotProduct(Quaternion const& q1, Quaternion const& q2)
 }
 
 // Spherical linear interpolation (slert)
+// See 10.4.13
 Quaternion slert(Quaternion const& q0, Quaternion const& q1, float t)
 {
     // check for out of range parameter

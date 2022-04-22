@@ -16,7 +16,7 @@ void RotationMatrix::identity() {
 }
 
 // Setup the matrix with the specific orientation
-// Converting Euler Angles to a Matrix (inertial->object matrix)
+// Converting Euler Angles to a Matrix (inertial->object matrix) parent->local;
 // See 10.6.1
 void RotationMatrix::setup(const EulerAngles &orientation) {
     // Fetch sine and cosine of angles

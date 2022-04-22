@@ -214,3 +214,11 @@ void EulerAngles::fromRotationMatrix(const RotationMatrix &m) {
         bank = atan2(m.m21, m.m22);
     }
 }
+
+std::ostream& operator<<(std::ostream& os, EulerAngles const& orient)
+{
+    os << "{ h: " << orient.heading/RAD << ", "
+       <<   "p: " << orient.pitch/RAD   << ", "
+       <<   "b: " << orient.bank/RAD    << " }";
+    return os;
+}

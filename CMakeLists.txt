@@ -3,8 +3,15 @@ project(transformations)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(transformations main.cpp
-        MathUtils.cpp MathUtils.h
-        EulerAngles.cpp EulerAngles.h
-        Quaternion.cpp Quaternion.h
-        Vector3.cpp Vector3.h RotationMatrix.cpp RotationMatrix.h Matrix4x3.cpp Matrix4x3.h)
+set(sources
+        main.cpp
+        src/MathUtils.cpp
+        src/EulerAngles.cpp
+        src/Quaternion.cpp
+        src/Vector3.cpp
+        src/RotationMatrix.cpp
+        src/Matrix4x3.cpp )
+
+include_directories(inc)
+
+add_executable(transformations ${sources})
