@@ -22,8 +22,8 @@ public:
     float pitch;
     float bank;
 
-    EulerAngles():heading{0.0f}, pitch{0.0f}, bank{0.0f}{};
-    EulerAngles(float h, float p, float b): heading{h}, pitch{p}, bank{b}{};
+    EulerAngles();
+    EulerAngles(float h, float p, float b);
     ~EulerAngles() = default;
 
     // Set identity triple (all zeros)

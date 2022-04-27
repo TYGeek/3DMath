@@ -16,12 +16,12 @@ const float k1Over2Pi = 1 / k2Pi;
 const float RAD = kPi/180.0f;
 
 // wrap an angle in range -pi...pi
-extern float wrapPi(float theta);
+float wrapPi(float theta);
 
 // "safe" inverse trig functions
-extern float safeAcos(float x);
+float safeAcos(float x);
 
 // compute sin()->first and cos()->second of an angle
-extern std::tuple<float, float> sinCos(float angle);
+std::tuple<float, float> sinCos(float angle);
 
 #endif //TRANSFORMATIONS_MATHUTILS_H

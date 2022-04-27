@@ -10,7 +10,8 @@ set(sources
         src/Quaternion.cpp
         src/Vector3.cpp
         src/RotationMatrix.cpp
-        src/Matrix4x3.cpp )
+        src/Matrix4x3.cpp
+        src/Vector2.cpp)
 
 include_directories(inc)
 

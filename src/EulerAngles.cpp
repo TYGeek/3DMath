@@ -9,6 +9,10 @@
 #include "RotationMatrix.h"
 #include "MathUtils.h"
 
+
+EulerAngles::EulerAngles():heading{0.0f}, pitch{0.0f}, bank{0.0f}{};
+EulerAngles::EulerAngles(float h, float p, float b): heading{h}, pitch{p}, bank{b}{};
+
 // The global Euler angles identity constant.
 // We do not know exactly when this object can be constructed in relation to other object,
 // so it is possible for the object to be referenced before it is initialized.
