@@ -1,7 +1,3 @@
-//
-// Created by admin on 02.04.2022.
-//
-
 #include "assert.h"
 #include "cmath"
 #include "tuple"
