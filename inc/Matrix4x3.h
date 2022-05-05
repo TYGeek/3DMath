@@ -1,7 +1,3 @@
-//
-// Created by admin on 04.04.2022.
-//
-
 #ifndef TRANSFORMATIONS_MATRIX4X3_H
 #define TRANSFORMATIONS_MATRIX4X3_H
 

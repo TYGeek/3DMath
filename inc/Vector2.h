@@ -1,7 +1,3 @@
-//
-// Created by admin on 27.04.2022.
-//
-
 #ifndef TRANSFORMATIONS_VECTOR2_H
 #define TRANSFORMATIONS_VECTOR2_H
 

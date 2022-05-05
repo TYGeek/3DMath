@@ -1,7 +1,3 @@
-//
-// Created by admin on 02.04.2022.
-//
-
 #ifndef TRANSFORMATIONS_MATHUTILS_H
 #define TRANSFORMATIONS_MATHUTILS_H
 #include <utility>

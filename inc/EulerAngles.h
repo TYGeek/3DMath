@@ -1,11 +1,20 @@
-//
-// Created by admin on 02.04.2022.
-//
-
 #ifndef TRANSFORMATIONS_EULERANGLES_H
 #define TRANSFORMATIONS_EULERANGLES_H
 
 #include <ostream>
+
+/*  Left-handed coordinate space   *
+ * * * * * * * * * * * * * * * * * *
+ *                                 *
+ *         | y+ (1. heading)       *
+ *         |                       *
+ *         |________ z+ (3. bank)  *
+ *        /                        *
+ *       /                         *
+ *      / x+ (2. pitch)            *
+ *                                 *
+ * * * * * * * * * * * * * * * * * *
+ */
 
 // Forward declaration
 class Quaternion;

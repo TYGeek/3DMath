@@ -1,7 +1,3 @@
-//
-// Created by admin on 02.04.2022.
-//
-
 #ifndef TRANSFORMATIONS_QUATERNION_H
 #define TRANSFORMATIONS_QUATERNION_H
 

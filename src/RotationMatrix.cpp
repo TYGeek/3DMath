@@ -1,7 +1,3 @@
-//
-// Created by admin on 03.04.2022.
-//
-
 #include "RotationMatrix.h"
 #include "Vector3.h"
 #include "MathUtils.h"
@@ -78,7 +74,7 @@ void RotationMatrix::fromObjectToInertialQuaternion(const Quaternion &q) {
     m33 = 1.0f - 2.0f*(q.x*q.x + q.y*q.y);
 }
 
-// Rotate a vector from inertial to object space
+// Rotate a vector from inertial to object space (direct ZSK->SvSK)
 Vector3 RotationMatrix::inertialToObject(const Vector3 &v)const {
     // Perform the matrix multiplication in the "standart" way
     return {m11*v.x + m21*v.y + m31*v.z,
@@ -86,7 +82,7 @@ Vector3 RotationMatrix::inertialToObject(const Vector3 &v)const {
             m13*v.x + m23*v.y + m33*v.z };
 }
 
-// Rotate a vector from object to inertial space
+// Rotate a vector from object to inertial space (inverse SvSK->ZSK)
 Vector3 RotationMatrix::objectToInertial(const Vector3 &v) const {
     // Multiply by transpose
     return {m11*v.x + m12*v.y + m13*v.z,

@@ -1,7 +1,3 @@
-//
-// Created by admin on 27.04.2022.
-//
-
 #include <cmath>
 #include <ostream>
 #include "Vector2.h"

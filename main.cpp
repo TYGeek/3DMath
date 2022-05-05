@@ -7,6 +7,18 @@
 #include "Matrix4x3.h"
 #include "MathUtils.h"
 
+/*   Left-handed coordinate space  *
+ * * * * * * * * * * * * * * * * * *
+ *                                 *
+ *         | y+ (heading)          *
+ *         |                       *
+ *         |________ z+ (bank)     *
+ *        /                        *
+ *       /                         *
+ *      / x+ (pitch)               *
+ *                                 *
+ * * * * * * * * * * * * * * * * * *
+ */
 
 int main()
 {
@@ -14,7 +26,7 @@ int main()
     Vector3 vec{1.0f, 1.0f, 0.0f};
 
     // Set orientation in Euler angle format
-    EulerAngles orientZSK{0.0f*RAD, 0.0f*RAD, 0.0f*RAD};
+    EulerAngles orientZSK{0.0f*RAD, 0.0f*RAD, 90.0f*RAD};
 
     // Set orientation in Quaternion format
     Quaternion q;
@@ -23,11 +35,11 @@ int main()
     // Set rotation matrix
     RotationMatrix matrixEuler;
     matrixEuler.setup(orientZSK);
-    Vector3 r1 = matrixEuler.objectToInertial(vec);
+    Vector3 r1 = matrixEuler.inertialToObject(vec);
 
     RotationMatrix matrixQuaternion;
     matrixQuaternion.fromObjectToInertialQuaternion(q);
-    Vector3 r2 = matrixQuaternion.objectToInertial(vec);
+    Vector3 r2 = matrixQuaternion.inertialToObject(vec);
 
     std::cout << vec << std::endl;
     std::cout << r1 << std::endl;

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.21)
 project(transformations)
 
-set(CMAKE_CXX_STANDARD 17)
-
+set(CMAKE_CXX_STANDARD 14)
+set(proj_name 3DMath)
 set(sources
         main.cpp
         src/MathUtils.cpp
@@ -13,6 +13,6 @@ set(sources
         src/Matrix4x3.cpp
         src/Vector2.cpp)
 
-include_directories(inc)
+add_executable(${proj_name} ${sources})
 
-add_executable(transformations ${sources})
+target_include_directories(${proj_name} PRIVATE inc)
